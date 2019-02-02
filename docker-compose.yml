@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  pretix:
+    image: 'pretix/standalone:stable'
+    container_name: pretix_app
+    restart: always 
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - /mnt/docker/pretix/data:/data
+      - /mnt/docker/pretix/conf:/etc/pretix
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:tickets.chaostreff-flensburg.de" 
+      - "traefik.port=80"
+    networks:
+      - web
+      - stack_network
+
+  db:
+    image: mariadb:10
+    restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true 
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=db
+      - MYSQL_PASSWORD=db
+    volumes:
+      - /mnt/docker/pretix/mariadb:/var/lib/mysql
+    networks:
+      - stack_network
+  
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - stack_network
+
+networks: 
+  web:
+    external: true
+  stack_network:
+    external: false
