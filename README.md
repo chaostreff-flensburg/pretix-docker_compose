@@ -19,3 +19,12 @@ Than run the docker-compose file and create a new cronjob to run the internal pr
 ```
 15,45 * * * * /usr/bin/docker exec pretix_app pretix cron
 ```
+
+After starting the stack navigate to:
+https://pretix.yourdomain.com/control/
+
+The default user is: admin@localhost
+
+And the default password is: admin
+
+Change this settings!
