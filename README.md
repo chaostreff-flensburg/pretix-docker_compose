@@ -27,4 +27,4 @@ The default user is: admin@localhost
 
 And the default password is: admin
 
-Change this settings!
+Change these settings!
